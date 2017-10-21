@@ -3,7 +3,7 @@ package cn.edu.hust.memcached.server.thread;
 import cn.edu.hust.memcached.server.message.MessageHandler;
 import cn.edu.hust.memcached.server.message.MessageInBound;
 import cn.edu.hust.memcached.server.message.exeception.UnSupportedCommandException;
-import cn.edu.hust.memcached.server.message.utils.Decoder;
+import cn.edu.hust.memcached.server.message.Decoder;
 
 import java.io.*;
 import java.net.Socket;
@@ -45,6 +45,8 @@ public class HandlerThread extends Thread {
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
+                } else {
+                    exception.printStackTrace();
                 }
             }
         }

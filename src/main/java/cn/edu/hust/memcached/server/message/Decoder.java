@@ -1,4 +1,4 @@
-package cn.edu.hust.memcached.server.message.utils;
+package cn.edu.hust.memcached.server.message;
 
 import cn.edu.hust.memcached.cache.StoredValue;
 import cn.edu.hust.memcached.server.message.MessageInBound;
@@ -16,6 +16,7 @@ public class Decoder {
 
     public static MessageInBound decodeMessage(InputStream in) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        //数据没有换行接收,data数据在行尾
         final String[] message = reader.readLine().split(" ");
         final String command = message[0];
         MessageInBound messageInBound;

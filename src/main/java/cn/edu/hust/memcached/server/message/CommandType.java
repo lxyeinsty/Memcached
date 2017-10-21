@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Created by lxy on 2017/10/20.
- *
+ * 支持的命令类型
  */
 public enum CommandType {
     GET("get"),
