@@ -2,6 +2,7 @@ package cn.edu.hust.memcached.server.message.utils;
 
 import cn.edu.hust.memcached.cache.StoredValue;
 import cn.edu.hust.memcached.server.message.MessageInBound;
+import cn.edu.hust.memcached.server.message.exeception.UnSupportedCommandException;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -28,7 +29,7 @@ public class Decoder {
                 break;
             }
             default: {
-                throw new IllegalArgumentException();
+                throw new UnSupportedCommandException(command);
             }
 
         }

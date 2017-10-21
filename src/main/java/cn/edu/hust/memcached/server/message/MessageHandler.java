@@ -52,7 +52,7 @@ public class MessageHandler {
 
             }
             default: {
-
+                writer.println("Unsupported this command");
             }
         }
     }
