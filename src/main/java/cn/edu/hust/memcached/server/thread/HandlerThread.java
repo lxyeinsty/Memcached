@@ -1,10 +1,10 @@
 package cn.edu.hust.memcached.server.thread;
 
 import cn.edu.hust.memcached.server.message.MessageHandler;
+import cn.edu.hust.memcached.server.message.MessageInBound;
+import cn.edu.hust.memcached.server.message.utils.Decoder;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.Socket;
 
 /**
@@ -33,16 +33,16 @@ public class HandlerThread extends Thread {
 
             try {
                 //接受消息并处理消息
-                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                String message = reader.readLine();
-                if (message != null) {
-                    messageHandler.onReceive(socket, message);
-                }
-            } catch (IOException exception) {
+                MessageInBound messageInBound = Decoder.decodeMessage(socket.getInputStream());
+                PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
+                messageHandler.onReceive(writer, messageInBound);
+            } catch (Exception exception) {
                 exception.printStackTrace();
             }
         }
     }
+
+
 
     public void stopRun() {
         this.isRun = false;

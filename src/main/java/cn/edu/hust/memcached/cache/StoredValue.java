@@ -10,8 +10,8 @@ public class StoredValue {
     //存储时间,单位秒
     private int targetTime;
 
-    public StoredValue(String value, int flags, int targetTime) {
-        this.data = value;
+    public StoredValue(String data, int flags, int targetTime) {
+        this.data = data;
         this.flags = flags;
         this.targetTime = targetTime;
     }
@@ -20,7 +20,7 @@ public class StoredValue {
         return this.data;
     }
 
-    public int getFalgs() {
+    public int getFlags() {
         return this.flags;
     }
 

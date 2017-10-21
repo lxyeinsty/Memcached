@@ -31,4 +31,5 @@ public class MemoryCache implements ICache<StoredValue> {
     public void delete(String key) {
         cache.invalidate(key);
     }
+
 }
