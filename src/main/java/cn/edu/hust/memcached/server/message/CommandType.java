@@ -7,14 +7,14 @@ import java.util.List;
  * Created by lxy on 2017/10/20.
  *
  */
-public enum Command {
+public enum CommandType {
     GET("get"),
     SET("set"),
     DELETE("delete");
 
     private final String value;
 
-    Command(String value) {
+    CommandType(String value) {
         this.value = value;
     }
 
@@ -25,8 +25,8 @@ public enum Command {
     //获取命令列表
     public static List<String> getValueList() {
         List<String> valueList = new ArrayList<String>();
-        Command[] commands = Command.values();
-        for (Command command : commands) {
+        CommandType[] commands = CommandType.values();
+        for (CommandType command : commands) {
             valueList.add(command.getValue());
         }
         return valueList;

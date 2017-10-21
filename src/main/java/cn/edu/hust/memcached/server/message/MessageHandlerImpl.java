@@ -11,6 +11,7 @@ import java.net.Socket;
  */
 public class MessageHandlerImpl implements MessageHandler {
 
+    @Override
     public void onReceive(Socket socket, String message) {
         print(socket, message);
     }
