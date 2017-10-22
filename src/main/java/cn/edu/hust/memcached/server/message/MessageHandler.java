@@ -24,7 +24,7 @@ public class MessageHandler {
         switch (message.getCommandType()) {
             case SET: {
                 //如果存储时间为负数,立即清除
-                if (message.getStoredValue().getTargetTime() <= 0) {
+                if (message.getStoredValue().getTargetTime() < 0) {
                     cache.delete(message.getKey());
                 } else {
                     cache.set(message.getKey(), message.getStoredValue());
@@ -34,7 +34,7 @@ public class MessageHandler {
             }
             case GET: {
                 StoredValue value = cache.get(message.getKey());
-                //如果数据过期,立即清除
+                //如果数据过期,立即清除,0表示永不过期
                 if (value != null && value.getTargetTime() != 0
                         && (int)(System.currentTimeMillis() / 1000) > value.getTargetTime()) {
                     value = null;

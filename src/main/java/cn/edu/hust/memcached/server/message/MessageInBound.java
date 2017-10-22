@@ -1,6 +1,7 @@
 package cn.edu.hust.memcached.server.message;
 
 import cn.edu.hust.memcached.cache.StoredValue;
+import cn.edu.hust.memcached.server.message.enums.CommandType;
 
 /**
  * Created by lxy on 2017/10/21.

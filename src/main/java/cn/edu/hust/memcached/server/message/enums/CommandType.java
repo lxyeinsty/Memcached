@@ -1,4 +1,4 @@
-package cn.edu.hust.memcached.server.message;
+package cn.edu.hust.memcached.server.message.enums;
 
 import java.util.ArrayList;
 import java.util.List;
