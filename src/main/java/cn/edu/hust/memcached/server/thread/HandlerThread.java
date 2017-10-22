@@ -31,7 +31,6 @@ public class HandlerThread extends Thread {
                 isRun = false;
                 break;
             }
-
             try {
                 //接受消息并处理消息
                 MessageInBound messageInBound = Decoder.decodeMessage(socket.getInputStream());
@@ -52,8 +51,6 @@ public class HandlerThread extends Thread {
             }
         }
     }
-
-
 
     public void stopRun() {
         this.isRun = false;

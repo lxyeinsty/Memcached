@@ -31,7 +31,6 @@ public class ListeningThread extends Thread {
                 this.isRun = false;
                 break;
             }
-
             try {
                 Socket socket = serverSocket.accept();
                 //每接收到一个Socket就建立一个新的线程来处理

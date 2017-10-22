@@ -1,5 +1,7 @@
 package cn.edu.hust.memcached.server.message.enums;
 
+import com.google.common.collect.Lists;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public enum CommandType {
 
     //获取命令列表
     public static List<String> getValueList() {
-        List<String> valueList = new ArrayList<String>();
+        List<String> valueList = Lists.newArrayList();
         CommandType[] commands = CommandType.values();
         for (CommandType command : commands) {
             valueList.add(command.getValue());

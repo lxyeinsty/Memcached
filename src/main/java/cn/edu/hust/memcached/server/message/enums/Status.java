@@ -5,7 +5,7 @@ package cn.edu.hust.memcached.server.message.enums;
  * 服务端响应给客户端的状态标识
  */
 public enum Status {
-    //正常操作命令返回状态
+    //正确操作命令返回状态
     STORED("10001", "STORED", ""),
     NOT_STORED("10002", "NOT_STORED", ""),
     EXISTS("10003", "EXISTS", ""),
