@@ -9,11 +9,13 @@ public class StoredValue {
     private int flags;
     //存储时间,单位秒
     private int targetTime;
+    private int bytes;
 
-    public StoredValue(String data, int flags, int targetTime) {
+    public StoredValue(String data, int flags, int targetTime, int bytes) {
         this.data = data;
         this.flags = flags;
         this.targetTime = targetTime;
+        this.bytes = bytes;
     }
 
     public String getData() {
@@ -26,6 +28,10 @@ public class StoredValue {
 
     public int getTargetTime() {
         return this.targetTime;
+    }
+
+    public int getBytes() {
+        return this.bytes;
     }
 
     @Override

@@ -2,7 +2,7 @@ package cn.edu.hust.memcached.server.thread;
 
 import cn.edu.hust.memcached.server.message.MessageHandler;
 import cn.edu.hust.memcached.server.message.MessageInBound;
-import cn.edu.hust.memcached.server.message.exeception.UnSupportedCommandException;
+import cn.edu.hust.memcached.server.message.exeception.MessageException;
 import cn.edu.hust.memcached.server.message.Decoder;
 
 import java.io.*;
@@ -38,10 +38,11 @@ public class HandlerThread extends Thread {
                 PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
                 messageHandler.onReceive(writer, messageInBound);
             } catch (Exception exception) {
-                if (exception instanceof UnSupportedCommandException) {
+                if (exception instanceof MessageException) {
                     try {
+                        MessageException messageException = (MessageException) exception;
                         PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
-                        writer.println(exception.getMessage());
+                        writer.println((messageException.getStatusMsg() + messageException.getStatusDetail()));
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
