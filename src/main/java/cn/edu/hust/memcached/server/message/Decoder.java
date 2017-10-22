@@ -26,9 +26,7 @@ public class Decoder {
                 if (message.length != SET_COMMAND_LENGTH) {
                     throw new MessageException(Status.ERROR);
                 }
-                //读取存储的数据,始终位于第二行
-                String data = reader.readLine();
-                messageInBound = decodeSetMessage(message, data);
+                messageInBound = decodeSetMessage(message, reader);
                 break;
             }
             case "get": {
@@ -48,7 +46,7 @@ public class Decoder {
     }
 
     private static MessageInBound decodeSetMessage(final String[] message,
-                                                   final String data) throws Exception {
+                                                   BufferedReader reader) throws Exception {
         try {
             final String key = message[1];
             final int flags = Integer.parseInt(message[2]);
@@ -56,6 +54,8 @@ public class Decoder {
             //设置过期时间
             final int targetTime = expireTime < 1 ? expireTime : (int)(System.currentTimeMillis() / 1000) + expireTime;
             final int bytes = Integer.parseInt(message[4]);
+            //读取存储的数据,始终位于第二行
+            final String data = reader.readLine();
             //字符长度不符合
             if (data.toCharArray().length != bytes) {
                 throw new MessageException(Status.CLIENT_ERROR_BAD_DATA);
