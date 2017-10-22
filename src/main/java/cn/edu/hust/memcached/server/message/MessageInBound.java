@@ -28,6 +28,10 @@ public class MessageInBound {
         return new MessageInBound(CommandType.GET, key, null);
     }
 
+    public static MessageInBound newDeleteMessageInBound(String key) {
+        return new MessageInBound(CommandType.DELETE, key, null);
+    }
+
     public String getKey() {
         return this.key;
     }

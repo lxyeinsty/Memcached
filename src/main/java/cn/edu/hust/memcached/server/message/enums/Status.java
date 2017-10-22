@@ -15,9 +15,10 @@ public enum Status {
 
     //错误,客户端或者服务端错误
     ERROR("20001", "ERROR", ""),
-    CLIENT_ERROR_BAD_DATA("20002", "CLIENT_ERROR", " bad data chunk"),
+    CLIENT_ERROR_BAD_DATA("20002", "CLIENT_ERROR", " bad data chunk\nERROR"),
     CLIENT_ERROR_BAD_COMMAND("20003", "CLIENT_ERROR", " bad command line format"),
-    SERVER_ERROR("20004", "SERVER_ERROR", "");
+    CLIENT_ERROR_BATCH_DEL("20004", "CLIENT_ERROR", " bad command line format.  Usage: delete <key> [noreply]"),
+    SERVER_ERROR("20005", "SERVER_ERROR", "");
 
     private String statusCode;
     private String statusMsg;

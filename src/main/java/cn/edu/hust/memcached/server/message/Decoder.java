@@ -13,12 +13,11 @@ import java.io.InputStreamReader;
  * 用于解析客户端发送过来的消息命令
  */
 public class Decoder {
-    private static final int SET_COMMAND_LENGTH = 6;
+    private static final int SET_COMMAND_LENGTH = 5;
     public static final String GET_OR_DEL_KEY_SEPARATOR = ",";
 
     public static MessageInBound decodeMessage(InputStream in) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        //数据没有换行接收,data数据在行尾
         final String[] message = reader.readLine().split(" ");
         final String command = message[0];
         MessageInBound messageInBound;
@@ -27,11 +26,17 @@ public class Decoder {
                 if (message.length != SET_COMMAND_LENGTH) {
                     throw new MessageException(Status.ERROR);
                 }
-                messageInBound = decodeSetMessage(message);
+                //读取存储的数据,始终位于第二行
+                String data = reader.readLine();
+                messageInBound = decodeSetMessage(message, data);
                 break;
             }
             case "get": {
                 messageInBound = decodeGetMessage(message);
+                break;
+            }
+            case "delete": {
+                messageInBound = decodeDeleteMessage(message);
                 break;
             }
             default: {
@@ -42,7 +47,8 @@ public class Decoder {
         return messageInBound;
     }
 
-    private static MessageInBound decodeSetMessage(final String[] message) throws Exception {
+    private static MessageInBound decodeSetMessage(final String[] message,
+                                                   final String data) throws Exception {
         try {
             final String key = message[1];
             final int flags = Integer.parseInt(message[2]);
@@ -50,7 +56,6 @@ public class Decoder {
             //设置过期时间
             final int targetTime = expireTime < 1 ? expireTime : (int)(System.currentTimeMillis() / 1000) + expireTime;
             final int bytes = Integer.parseInt(message[4]);
-            final String data = message[5];
             //字符长度不符合
             if (data.toCharArray().length != bytes) {
                 throw new MessageException(Status.CLIENT_ERROR_BAD_DATA);
@@ -75,5 +80,16 @@ public class Decoder {
         }
         final String key = keyBuilder.toString();
         return MessageInBound.newGetMessageInBound(key);
+    }
+
+    private static MessageInBound decodeDeleteMessage(final String[] message) throws Exception {
+        if (message.length < 2) {
+            throw new MessageException(Status.ERROR);
+        }
+        if (message.length > 2) {
+            throw  new MessageException(Status.CLIENT_ERROR_BATCH_DEL);
+        }
+        final String key = message[1];
+        return MessageInBound.newDeleteMessageInBound(key);
     }
 }

@@ -3,6 +3,8 @@ package cn.edu.hust.memcached.server.message;
 import cn.edu.hust.memcached.cache.ICache;
 import cn.edu.hust.memcached.cache.StoredValue;
 import cn.edu.hust.memcached.server.message.enums.Status;
+import cn.edu.hust.memcached.server.message.exeception.MessageException;
+import javafx.scene.media.MediaException;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -21,7 +23,7 @@ public class MessageHandler {
         this.cache = cache;
     }
 
-    public void onReceive(PrintWriter writer, MessageInBound messageInBound) {
+    public void onReceive(PrintWriter writer, MessageInBound messageInBound) throws Exception {
         switch (messageInBound.getCommandType()) {
             case SET: {
                 //如果存储时间为负数,立即清除
@@ -42,7 +44,7 @@ public class MessageHandler {
                     if (value != null && value.getTargetTime() != 0
                             && (int)(System.currentTimeMillis() / 1000) > value.getTargetTime()) {
                         value = null;
-                        cache.delete(messageInBound.getKey());
+                        cache.delete(keys[i]);
                     }
 
                     if (value != null) {
@@ -56,10 +58,20 @@ public class MessageHandler {
                     }
                 }
                 break;
-
+            }
+            case DELETE: {
+                String key = messageInBound.getKey();
+                StoredValue value = cache.get(key);
+                if (value != null) {
+                    cache.delete(key);
+                    writer.println(Status.DELETED.getStatusMsg());
+                } else {
+                    writer.println(Status.NOT_FOUND);
+                }
+                break;
             }
             default: {
-                writer.println("Unsupported this command");
+                throw new MessageException(Status.ERROR);
             }
         }
     }
