@@ -20,6 +20,6 @@ public class Application {
         final ICache<StoredValue> cache = new MemoryCache(CACHE_MAX_SIZE, CACHE_CONCURRENCY_LEVEL);
         MessageHandler messageHandler = new MessageHandler(cache);
         //配置启动server
-        ServerBootstrap serverBootstrap = new ServerBootstrap(8888, messageHandler);
+        ServerBootstrap serverBootstrap = new ServerBootstrap(Integer.parseInt(args[0]), messageHandler);
     }
 }
