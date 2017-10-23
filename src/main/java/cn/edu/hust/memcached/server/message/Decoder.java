@@ -51,11 +51,11 @@ public class Decoder {
             final String key = message[1];
             final int flags = Integer.parseInt(message[2]);
             final int expireTime = Integer.parseInt(message[3]);
-            //设置过期时间
-            final int targetTime = expireTime < 1 ? expireTime : (int)(System.currentTimeMillis() / 1000) + expireTime;
-            final int bytes = Integer.parseInt(message[4]);
             //读取存储的数据,始终位于第二行
             final String data = reader.readLine();
+            //设置过期时间
+            final int bytes = Integer.parseInt(message[4]);
+            final int targetTime = expireTime < 1 ? expireTime : (int)(System.currentTimeMillis() / 1000) + expireTime;
             //字符长度不符合
             if (data.toCharArray().length != bytes) {
                 throw new MessageException(Status.CLIENT_ERROR_BAD_DATA);
