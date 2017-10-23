@@ -2,7 +2,7 @@ package cn.edu.hust.memcached.server.thread;
 
 import cn.edu.hust.memcached.server.message.MessageHandler;
 import cn.edu.hust.memcached.server.message.MessageInBound;
-import cn.edu.hust.memcached.server.message.exeception.MessageException;
+import cn.edu.hust.memcached.server.message.exception.MessageException;
 import cn.edu.hust.memcached.server.message.Decoder;
 
 import java.io.*;

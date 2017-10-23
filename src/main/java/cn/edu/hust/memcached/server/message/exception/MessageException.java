@@ -1,4 +1,4 @@
-package cn.edu.hust.memcached.server.message.exeception;
+package cn.edu.hust.memcached.server.message.exception;
 
 import cn.edu.hust.memcached.server.message.enums.Status;
 

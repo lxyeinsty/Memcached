@@ -41,5 +41,4 @@ public enum Status {
         this.statusMsg = statusMsg;
         this.statusDetail = statusDetail;
     }
-
 }

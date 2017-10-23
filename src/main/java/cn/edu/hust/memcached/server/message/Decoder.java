@@ -2,7 +2,7 @@ package cn.edu.hust.memcached.server.message;
 
 import cn.edu.hust.memcached.cache.StoredValue;
 import cn.edu.hust.memcached.server.message.enums.Status;
-import cn.edu.hust.memcached.server.message.exeception.MessageException;
+import cn.edu.hust.memcached.server.message.exception.MessageException;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -14,7 +14,7 @@ import java.io.InputStreamReader;
  */
 public class Decoder {
     private static final int SET_COMMAND_LENGTH = 5;
-    public static final String GET_OR_DEL_KEY_SEPARATOR = ",";
+    public static final String GET_KEY_SEPARATOR = ",";
 
     public static MessageInBound decodeMessage(InputStream in) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -75,7 +75,7 @@ public class Decoder {
         for (int i = 1; i < message.length; i++) {
             keyBuilder.append(message[i]);
             if (i != message.length - 1) {
-                keyBuilder.append(GET_OR_DEL_KEY_SEPARATOR);
+                keyBuilder.append(GET_KEY_SEPARATOR);
             }
         }
         final String key = keyBuilder.toString();

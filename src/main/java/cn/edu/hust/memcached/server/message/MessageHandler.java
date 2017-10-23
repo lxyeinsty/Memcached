@@ -3,13 +3,9 @@ package cn.edu.hust.memcached.server.message;
 import cn.edu.hust.memcached.cache.ICache;
 import cn.edu.hust.memcached.cache.StoredValue;
 import cn.edu.hust.memcached.server.message.enums.Status;
-import cn.edu.hust.memcached.server.message.exeception.MessageException;
-import javafx.scene.media.MediaException;
+import cn.edu.hust.memcached.server.message.exception.MessageException;
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.net.Socket;
 
 /**
  * Created by lxy on 2017/10/20.
@@ -23,6 +19,7 @@ public class MessageHandler {
         this.cache = cache;
     }
 
+    //命令处理逻辑
     public void onReceive(PrintWriter writer, MessageInBound messageInBound) throws Exception {
         switch (messageInBound.getCommandType()) {
             case SET: {
@@ -37,7 +34,7 @@ public class MessageHandler {
             }
             case GET: {
                 String mulKey = messageInBound.getKey();
-                String[] keys = mulKey.split(Decoder.GET_OR_DEL_KEY_SEPARATOR);
+                String[] keys = mulKey.split(Decoder.GET_KEY_SEPARATOR);
                 for (int i = 0; i < keys.length; i++) {
                     StoredValue value = cache.get(keys[i]);
                     //如果数据过期,立即清除,0表示永不过期
