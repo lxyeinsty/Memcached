@@ -19,6 +19,9 @@ public class Decoder {
     public static MessageInBound decodeMessage(InputStream in) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         final String[] message = reader.readLine().split(" ");
+        if (message.length == 0) {
+            throw new MessageException(Status.ERROR);
+        }
         final String command = message[0];
         MessageInBound messageInBound;
         switch (command) {
