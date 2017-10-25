@@ -10,7 +10,7 @@ if [[ $PORT =~ ^[0-9]*$ ]]; then
     cd "${CWD}" && java -cp ./lib/*: $ENTRANCE $PORT
 else
     echo "illegal port"
-    exit 1
+    exit 0
 fi
 
 #sleep 2

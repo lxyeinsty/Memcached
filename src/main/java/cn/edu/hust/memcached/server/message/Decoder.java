@@ -18,7 +18,11 @@ public class Decoder {
 
     public static MessageInBound decodeMessage(InputStream in) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        final String[] message = reader.readLine().split(" ");
+        final String readLine = reader.readLine();
+        if (readLine == null) {
+            throw new MessageException(Status.ERROR);
+        }
+        final String[] message = readLine.split(" ");
         if (message.length == 0) {
             throw new MessageException(Status.ERROR);
         }
